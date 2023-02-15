@@ -1,4 +1,4 @@
-FROM node
+FROM node as react-dev
 WORKDIR /app
 COPY package.json .
 RUN npm install
@@ -7,3 +7,5 @@ ENV REACT_APP_NAME=myName
 RUN npm run build
 
 
+FROM nginx
+COPY --from=react-dev /app/build /usr/share/nginx/html
